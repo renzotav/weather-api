@@ -1,17 +1,15 @@
 package com.renzo.weatherapi.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ClimaController {
 
-    @GetMapping("/clima")
-    public String obterClima(){
-        return "Clima controller funcionando";
+    @GetMapping("/clima/{cidade}")
+    public String obterClima(@PathVariable String cidade){
+        return "Consultando clima da cidade: " + cidade;
     }
-    @GetMapping("/status")
-    public String retornarStatus(){
-        return "API funcionando";
-    }
+
 }
