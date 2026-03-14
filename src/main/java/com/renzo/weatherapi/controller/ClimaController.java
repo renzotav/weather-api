@@ -1,5 +1,6 @@
 package com.renzo.weatherapi.controller;
 
+import com.renzo.weatherapi.model.Clima;
 import com.renzo.weatherapi.service.ClimaService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,15 +16,9 @@ public class ClimaController {
     }
 
     @GetMapping("/clima/{cidade}")
-    public String obterClima(@PathVariable String cidade){
+    public Clima obterClima(@PathVariable String cidade){
         return climaService.consultarClima(cidade);
     }
-
-    @GetMapping("/temperatura/{cidade}")
-        public String obterTemperatura(@PathVariable String cidade){
-        return climaService.consultarTemperatura(cidade);
-    }
-
 
 
 }
