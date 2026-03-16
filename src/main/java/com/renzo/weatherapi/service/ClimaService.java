@@ -25,4 +25,12 @@ public class ClimaService {
         return climaRepository.findAll();
     }
 
+    public List<Clima> buscarPorCidade(String cidade){
+        return climaRepository.findByCidade(cidade);
+    }
+
+    public List<Clima> buscarPorTemperatura(int temperatura){
+        return climaRepository.findByTemperatura(temperatura);
+    }
+
 }

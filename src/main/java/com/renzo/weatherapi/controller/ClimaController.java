@@ -28,7 +28,15 @@ public class ClimaController {
         return climaService.obterHistorico();
     }
 
+    @GetMapping("/clima/cidade/{cidade}")
+    public List<Clima> buscarPorCidade(@PathVariable String cidade){
+        return climaService.buscarPorCidade(cidade);
+    }
 
+    @GetMapping("/clima/temperatura/{temperatura}")
+    public List<Clima> buscarPorTemperatura(@PathVariable int temperatura){
+        return climaService.buscarPorTemperatura(temperatura);
+    }
 
 
 }
