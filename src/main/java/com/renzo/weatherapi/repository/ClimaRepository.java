@@ -14,4 +14,10 @@ public interface ClimaRepository extends JpaRepository<Clima, Long> {
     List<Clima> findByTemperatura(int temperatura);
 
     int temperatura(int temperatura);
+
+    List<Clima> findByCidadeAndTemperatura(String cidade, int temperatura);
+
+    List<Clima> findByCidadeContaining(String cidade);
+
+    List<Clima> findAllByOrderByTemperaturaAsc();
 }

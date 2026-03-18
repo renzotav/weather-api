@@ -37,6 +37,16 @@ public class ClimaController {
     public List<Clima> buscarPorTemperatura(@PathVariable int temperatura){
         return climaService.buscarPorTemperatura(temperatura);
     }
-
-
+    @GetMapping("/clima/filtro/{cidade}/{temperatura}")
+    public List<Clima> buscarPorCidadeETemperatura(@PathVariable String cidade, @PathVariable int temperatura ){
+        return climaService.buscarPorCidadeETemperatura(cidade, temperatura);
+    }
+    @GetMapping("/clima/busca/{cidade}")
+    public List<Clima> buscarPorNomeParcial(@PathVariable String cidade){
+        return climaService.buscarPorNomeParcial(cidade);
+    }
+    @GetMapping("/clima/ordenado")
+    public List<Clima> listarOrdenadoPorTemperatura(){
+        return climaService.listarOrdenadoPorTemperatura();
+    }
 }
