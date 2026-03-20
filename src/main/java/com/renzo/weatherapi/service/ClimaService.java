@@ -1,10 +1,12 @@
 package com.renzo.weatherapi.service;
 
 import com.renzo.weatherapi.dto.ClimaDTO;
+import com.renzo.weatherapi.exception.CidadeNaoEncontradaException;
 import com.renzo.weatherapi.external.ClimaResponse;
 import com.renzo.weatherapi.model.Clima;
 import com.renzo.weatherapi.repository.ClimaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -23,21 +25,25 @@ public class ClimaService {
 
     public ClimaDTO consultarClima(String cidade) {
 
-        String url = "https://api.openweathermap.org/data/2.5/weather?q="
-                + cidade
-                + "&appid=63e10209c72dd66d0c89fa2c5cdef550&units=metric";
+        try {
 
-        ClimaResponse response = restTemplate.getForObject(url, ClimaResponse.class);
+            String url = "https://api.openweathermap.org/data/2.5/weather?q="
+                    + cidade
+                    + "&appid=63e10209c72dd66d0c89fa2c5cdef550&units=metric";
 
-        int temperatura = (int) response.getMain().getTemp();
-        int umidade = response.getMain().getHumidity();
+            ClimaResponse response = restTemplate.getForObject(url, ClimaResponse.class);
 
-        Clima clima = new Clima(cidade, temperatura, umidade);
+            int temperatura = (int) response.getMain().getTemp();
+            int umidade = response.getMain().getHumidity();
 
-        clima = climaRepository.save(clima);
+            Clima clima = new Clima(cidade, temperatura, umidade);
 
-        return new ClimaDTO(clima.getCidade(), clima.getTemperatura(), clima.getUmidade());
+            clima = climaRepository.save(clima);
 
+            return new ClimaDTO(clima.getCidade(), clima.getTemperatura(), clima.getUmidade());
+        } catch (HttpClientErrorException.NotFound e){
+            throw new CidadeNaoEncontradaException("Cidade " + cidade + " não foi encontrada");
+        }
     }
 
     public List<ClimaDTO> obterHistorico() {
