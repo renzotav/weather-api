@@ -29,15 +29,27 @@ public class ClimaService {
     }
 
     public List<ClimaDTO> obterHistorico() {
-        return climaRepository.findAll().stream().map(clima -> new ClimaDTO(clima.getCidade(),clima.getTemperatura(),clima.getUmidade())).collect(Collectors.toList());
+        return climaRepository.findAll().stream().map(clima -> new ClimaDTO(
+                clima.getCidade(),
+                clima.getTemperatura(),
+                clima.getUmidade())).collect(Collectors.toList());
     }
 
     public List<ClimaDTO> buscarPorCidade(String cidade) {
-        return climaRepository.findByCidade(cidade);
+        return climaRepository.findByCidade(cidade).stream().map(clima -> new ClimaDTO(
+                clima.getCidade(),
+                clima.getTemperatura(),
+                clima.getUmidade()
+        )).collect(Collectors.toList());
+
     }
 
     public List<ClimaDTO> buscarPorTemperatura(int temperatura) {
-        return climaRepository.findByTemperatura(temperatura);
+        return climaRepository.findByTemperatura(temperatura).stream().map(clima -> new ClimaDTO(
+                clima.getCidade(),
+                clima.getTemperatura(),
+                clima.getUmidade()
+        )).collect(Collectors.toList());
     }
 
     public List<Clima> buscarPorCidadeETemperatura(String cidade, int temperatura) {
