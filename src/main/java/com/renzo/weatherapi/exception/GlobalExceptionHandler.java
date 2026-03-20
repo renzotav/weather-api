@@ -1,5 +1,6 @@
 package com.renzo.weatherapi.exception;
 
+import com.renzo.weatherapi.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -10,7 +11,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CidadeNaoEncontradaException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String tratarCidadeNaoEncontrada(CidadeNaoEncontradaException ex){
-        return ex.getMessage();
+    public ApiResponse<?> tratarCidadeNaoEncontrada(CidadeNaoEncontradaException ex){
+        return new ApiResponse<>(false,null, ex.getMessage());
     }
 }

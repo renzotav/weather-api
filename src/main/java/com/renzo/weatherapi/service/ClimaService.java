@@ -5,6 +5,7 @@ import com.renzo.weatherapi.exception.CidadeNaoEncontradaException;
 import com.renzo.weatherapi.external.ClimaResponse;
 import com.renzo.weatherapi.model.Clima;
 import com.renzo.weatherapi.repository.ClimaRepository;
+import com.renzo.weatherapi.response.ApiResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;

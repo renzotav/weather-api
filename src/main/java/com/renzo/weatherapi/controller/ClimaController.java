@@ -3,6 +3,7 @@ package com.renzo.weatherapi.controller;
 import com.renzo.weatherapi.dto.ClimaDTO;
 import com.renzo.weatherapi.model.Clima;
 
+import com.renzo.weatherapi.response.ApiResponse;
 import com.renzo.weatherapi.service.ClimaService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,18 +21,22 @@ public class ClimaController {
     }
 
     @GetMapping("/clima/{cidade}")
-    public ClimaDTO obterClima(@PathVariable String cidade){
-        return climaService.consultarClima(cidade);
+    public ApiResponse<ClimaDTO> obterClima(@PathVariable String cidade){
+        ClimaDTO clima = climaService.consultarClima(cidade);
+
+        return new ApiResponse<>(true, clima, null);
     }
 
     @GetMapping("/historico")
-    public List<ClimaDTO> obterHistorico(){
-        return climaService.obterHistorico();
+    public ApiResponse<List<ClimaDTO>> obterHistorico(){
+        List<ClimaDTO> lista = climaService.obterHistorico();
+        return new ApiResponse<>(true, lista, null);
     }
 
     @GetMapping("/clima/cidade/{cidade}")
-    public List<ClimaDTO> buscarPorCidade(@PathVariable String cidade){
-        return climaService.buscarPorCidade(cidade);
+    public ApiResponse <List<ClimaDTO>> buscarPorCidade(@PathVariable String cidade){
+        List<ClimaDTO> lista = climaService.buscarPorCidade(cidade);
+        return new ApiResponse<>(true, lista, null);
     }
 
     @GetMapping("/clima/temperatura/{temperatura}")
