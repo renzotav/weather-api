@@ -1,9 +1,12 @@
 package com.renzo.weatherapi.service;
 
 import com.renzo.weatherapi.dto.ClimaDTO;
+import com.renzo.weatherapi.external.ClimaResponse;
 import com.renzo.weatherapi.model.Clima;
 import com.renzo.weatherapi.repository.ClimaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,14 +14,23 @@ import java.util.stream.Collectors;
 public class ClimaService {
 
     private final ClimaRepository climaRepository;
+    private final RestTemplate restTemplate;
 
-    public ClimaService(ClimaRepository climaRepository) {
+    public ClimaService(ClimaRepository climaRepository, RestTemplate restTemplate) {
         this.climaRepository = climaRepository;
+        this.restTemplate = restTemplate;
     }
 
     public ClimaDTO consultarClima(String cidade) {
-        int temperatura = 19;
-        int umidade = 75;
+
+        String url = "https://api.openweathermap.org/data/2.5/weather?q="
+                + cidade
+                + "&appid=63e10209c72dd66d0c89fa2c5cdef550&units=metric";
+
+        ClimaResponse response = restTemplate.getForObject(url, ClimaResponse.class);
+
+        int temperatura = (int) response.getMain().getTemp();
+        int umidade = response.getMain().getHumidity();
 
         Clima clima = new Clima(cidade, temperatura, umidade);
 
