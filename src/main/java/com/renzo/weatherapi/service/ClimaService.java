@@ -1,9 +1,11 @@
 package com.renzo.weatherapi.service;
 
+import com.renzo.weatherapi.dto.ClimaDTO;
 import com.renzo.weatherapi.model.Clima;
 import com.renzo.weatherapi.repository.ClimaRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClimaService {
@@ -14,24 +16,27 @@ public class ClimaService {
         this.climaRepository = climaRepository;
     }
 
-    public Clima consultarClima(String cidade) {
+    public ClimaDTO consultarClima(String cidade) {
         int temperatura = 19;
         int umidade = 75;
 
         Clima clima = new Clima(cidade, temperatura, umidade);
 
-        return climaRepository.save(clima);
+        clima = climaRepository.save(clima);
+
+        return new ClimaDTO(clima.getCidade(), clima.getTemperatura(), clima.getUmidade());
+
     }
 
-    public List<Clima> obterHistorico() {
-        return climaRepository.findAll();
+    public List<ClimaDTO> obterHistorico() {
+        return climaRepository.findAll().stream().map(clima -> new ClimaDTO(clima.getCidade(),clima.getTemperatura(),clima.getUmidade())).collect(Collectors.toList());
     }
 
-    public List<Clima> buscarPorCidade(String cidade) {
+    public List<ClimaDTO> buscarPorCidade(String cidade) {
         return climaRepository.findByCidade(cidade);
     }
 
-    public List<Clima> buscarPorTemperatura(int temperatura) {
+    public List<ClimaDTO> buscarPorTemperatura(int temperatura) {
         return climaRepository.findByTemperatura(temperatura);
     }
 

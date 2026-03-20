@@ -1,17 +1,18 @@
 package com.renzo.weatherapi.repository;
 
 
+import com.renzo.weatherapi.dto.ClimaDTO;
 import com.renzo.weatherapi.model.Clima;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ClimaRepository extends JpaRepository<Clima, Long> {
 
-    List<Clima> findByCidade(String cidade);
+    List<ClimaDTO> findByCidade(String cidade);
 
     String cidade(String cidade);
 
-    List<Clima> findByTemperatura(int temperatura);
+    List<ClimaDTO> findByTemperatura(int temperatura);
 
     int temperatura(int temperatura);
 

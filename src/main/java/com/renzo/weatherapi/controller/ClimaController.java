@@ -1,5 +1,6 @@
 package com.renzo.weatherapi.controller;
 
+import com.renzo.weatherapi.dto.ClimaDTO;
 import com.renzo.weatherapi.model.Clima;
 
 import com.renzo.weatherapi.service.ClimaService;
@@ -19,22 +20,22 @@ public class ClimaController {
     }
 
     @GetMapping("/clima/{cidade}")
-    public Clima obterClima(@PathVariable String cidade){
+    public ClimaDTO obterClima(@PathVariable String cidade){
         return climaService.consultarClima(cidade);
     }
 
     @GetMapping("/historico")
-    public List<Clima> obterHistorico(){
+    public List<ClimaDTO> obterHistorico(){
         return climaService.obterHistorico();
     }
 
     @GetMapping("/clima/cidade/{cidade}")
-    public List<Clima> buscarPorCidade(@PathVariable String cidade){
+    public List<ClimaDTO> buscarPorCidade(@PathVariable String cidade){
         return climaService.buscarPorCidade(cidade);
     }
 
     @GetMapping("/clima/temperatura/{temperatura}")
-    public List<Clima> buscarPorTemperatura(@PathVariable int temperatura){
+    public List<ClimaDTO> buscarPorTemperatura(@PathVariable int temperatura){
         return climaService.buscarPorTemperatura(temperatura);
     }
     @GetMapping("/clima/filtro/{cidade}/{temperatura}")
