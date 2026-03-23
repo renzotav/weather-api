@@ -3,6 +3,8 @@ package com.renzo.weatherapi.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -17,12 +19,19 @@ public class SecurityConfig {
                         .requestMatchers("/clima/ordenado").authenticated()
                         .requestMatchers("/clima/**").permitAll()
                         .requestMatchers("/historico").permitAll()
+                        .requestMatchers("/usuarios").permitAll()
+                        .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
-                )
-                .formLogin(form -> form.permitAll())
-                .httpBasic(basic -> {});
+                );
+
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+
     }
 
 

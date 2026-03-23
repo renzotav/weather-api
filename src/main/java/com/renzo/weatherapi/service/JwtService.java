@@ -1,0 +1,32 @@
+package com.renzo.weatherapi.service;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Service;
+
+import javax.crypto.SecretKey;
+import java.util.Date;
+
+@Service
+public class JwtService {
+
+    private final String SECRET = "c2VncmVkby1zdXBlci1zZWNyZXRvLW11aXRvLWxvbmdv";
+
+    public String gerarToken(String username){
+
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        SecretKey key = Keys.hmacShaKeyFor(keyBytes);
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .signWith(key)
+                .compact();
+
+    }
+
+
+
+}
