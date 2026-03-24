@@ -3,6 +3,8 @@ package com.renzo.weatherapi.service;
 import com.renzo.weatherapi.dto.LoginRequest;
 import com.renzo.weatherapi.model.Usuario;
 import com.renzo.weatherapi.repository.UsuarioRepository;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +25,13 @@ public class AuthService {
 
             Usuario usuario = usuarioRepository
                     .findByUsername(request.getUsername())
-                    .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+                    .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
 
             /*if(!usuario.getPassword().equals(request.getPassword())) {
                 throw new RuntimeException("Senha invalida");
             }*/
             if (!passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {
-                throw new RuntimeException("Senha inválida");
+                throw new BadCredentialsException("Senha inválida");
             }
 
             return jwtService.gerarToken(usuario.getUsername());
