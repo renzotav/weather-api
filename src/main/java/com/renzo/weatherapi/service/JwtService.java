@@ -1,5 +1,7 @@
 package com.renzo.weatherapi.service;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -27,6 +29,18 @@ public class JwtService {
 
     }
 
+    public String extrairUsername(String token){
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        SecretKey key = Keys.hmacShaKeyFor(keyBytes);
+
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
+    }
 
 
 }
