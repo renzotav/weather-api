@@ -6,6 +6,8 @@ import com.renzo.weatherapi.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioService {
 
@@ -23,5 +25,9 @@ public class UsuarioService {
                 passwordEncoder.encode(request.getPassword())
         );
         usuarioRepository.save(usuario);
+    }
+
+    public List<Usuario> listarUsuarios(){
+        return usuarioRepository.findAll();
     }
 }
