@@ -33,6 +33,7 @@ public class SecurityConfig {
                         /*.requestMatchers("/historico").permitAll()*/
                         .requestMatchers("/usuarios").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/health").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
