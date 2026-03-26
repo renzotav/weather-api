@@ -22,5 +22,4 @@ public class AuthController {
         String token = authService.login(request);
         return new LoginResponse(token);
     }
-
 }
